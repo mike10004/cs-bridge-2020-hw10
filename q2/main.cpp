@@ -7,12 +7,36 @@
 #include <algorithm>  // for testing
 using namespace std;
 
+int countMissing(const int counts[], int numCounts) {
+    int numMissing = 0;
+    for (int i = 0; i < numCounts; i++) {
+        if (counts[i] == 0) {
+            numMissing++;
+        }
+    }
+    return numMissing;
+}
+
 int* findMissing(const int arr[], int n, int& resArrSize) {
     int* allNumbers = new int[n + 1];
     for (int i = 0; i < n + 1; i++) {
         allNumbers[i] = 0;
     }
-    
+    for (int i = 0; i < n; i++) {
+        assert(arr[i] >= 0 && arr[i] <= n);
+        allNumbers[arr[i]]++;
+    }
+    resArrSize = countMissing(allNumbers, n + 1);
+    assert(resArrSize > 0);
+    int* missing = new int[resArrSize];
+    int missingIndex = 0;
+    for (int i = 0; i < n + 1; i++) {
+        if (allNumbers[i] == 0) {
+            missing[missingIndex] = i;
+            missingIndex++;
+        }
+    }
+    return missing;
 }
 
 void printVector(const vector<int>& values) {
@@ -37,9 +61,9 @@ void testFindMissing(const vector<int>& input, const vector<int>& expected) {
     }
     assert(actualSize == expected.size());
     for (int i = 0; i < actualSize; i++) {
-        printVector(input);
-        printVector(expected);
         if (expected[i] != actual[i]) {
+            printVector(input);
+            printVector(expected);
             cout << "expected[" << i << "] = " << expected[i] << " != " << actual[i] << " = actual[" << i << "]" << endl;
         }
         assert(expected[i] == actual[i]);
@@ -54,7 +78,7 @@ void testFindMissingAllPermutations(const vector<int>& input, const vector<int>&
         copy[i] = input[i];
     }
     do {
-        vector<int> permutation;
+        vector<int> permutation(length);
         permutation.assign(copy, copy + length);
         testFindMissing(permutation, expected);
     } while ( next_permutation(copy, copy + length) );
@@ -63,17 +87,16 @@ void testFindMissingAllPermutations(const vector<int>& input, const vector<int>&
 
 int main() {
     testFindMissingAllPermutations({3, 1, 3, 0, 6, 4}, {2, 5});
-    testFindMissingAllPermutations({}, {});
+    testFindMissingAllPermutations({}, {0});
     testFindMissingAllPermutations({1}, {0});
     testFindMissingAllPermutations({0}, {1});
-    testFindMissingAllPermutations({0, 0, 0}, {1, 2});
+    testFindMissingAllPermutations({0, 0, 0}, {1, 2, 3});
     testFindMissingAllPermutations({1, 2, 3, 4}, {0});
-    testFindMissingAllPermutations({0, 2, 3, 4}, {0});
-    testFindMissingAllPermutations({0, 1, 3, 4}, {0});
-    testFindMissingAllPermutations({0, 1, 2, 4}, {0});
+    testFindMissingAllPermutations({0, 2, 3, 4}, {1});
+    testFindMissingAllPermutations({0, 1, 3, 4}, {2});
+    testFindMissingAllPermutations({0, 1, 2, 4}, {3});
     testFindMissingAllPermutations({0, 1, 2, 3}, {4});
-    testFindMissingAllPermutations({0, 0, 3, 3}, {4});
-    testFindMissingAllPermutations({0, 1, 1, 3}, {4});
-    testFindMissingAllPermutations({}, {});
+    testFindMissingAllPermutations({0, 1, 1, 3}, {2, 4});
+    testFindMissingAllPermutations({0, 0, 3, 3}, {1, 2, 4});
     return 0;
 }
