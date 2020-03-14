@@ -17,6 +17,15 @@ bool isBoundary(char ch) {
     return isspace(ch) || ispunct(ch);
 }
 
+/**
+ * Finds the boundaries of words in a sentence. Scans
+ * each character in the string, checking whether it is a 
+ * boundary character, and recording the positions 
+ * appropriately. Time complexity is O(n) where n is string length;
+ * @param sentence sentence
+ * @param startPositions vector to accumulate word start positions
+ * @param lengths vector to accumulate word lengths
+ */
 void findBoundaries(const string& sentence, vector<int>& startPositions, vector<int>& lengths) {
     bool inWord = false;
     int wordLength = 0;
@@ -37,15 +46,17 @@ void findBoundaries(const string& sentence, vector<int>& startPositions, vector<
         }
     }
     if (inWord) {
-        inWord = false;
         lengths.push_back(wordLength);
-        wordLength = 0;
     }
 }
 
 /**
  * Allocates and returns a new array (of strings), that contains all the 
- * words in the given sentence.  
+ * words in the given sentence. Calls findBoundaries to gather the word 
+ * boundaries into vectors, allocates an array for the words, and then 
+ * copies each substring defined by the word boundaries into an array.
+ * The substrings are disjoint, so at most each character in the input
+ * string is copied. Time complexity is O(n).
  * @param sentence input sentence
  * @param outWordsArrSize output array length
  * @return string array pointer
@@ -65,6 +76,9 @@ string* createWordsArray(const string& sentence, int& outWordsArrSize) {
     return words;
 }
 
+/**
+ * Tests the createWordsArray function.
+ */
 void testCreateWordsArray(const char* inputSentence, const vector<string>& expected) {
     const string sentenceString(inputSentence);
     int numWords = 0;
@@ -81,8 +95,13 @@ void testCreateWordsArray(const char* inputSentence, const vector<string>& expec
         }
         assert(expected[i] == wordsArray[i]);
     }
+    delete[] wordsArray;
 }
 
+/**
+ * Runs through a number of test cases of the createWordsArray function.
+ * @return zero on clean operation; nonzero on assertion failure
+ */
 int main() {
     vector<string> expectedCommon = {"You", "can", "do", "it"};
     testCreateWordsArray("You can do it", expectedCommon);
