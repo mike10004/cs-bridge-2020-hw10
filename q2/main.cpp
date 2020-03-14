@@ -8,12 +8,42 @@
 using namespace std;
 
 int* findMissing(const int arr[], int n, int& resArrSize) {
-    return nullptr;
+    int* allNumbers = new int[n + 1];
+    for (int i = 0; i < n + 1; i++) {
+        allNumbers[i] = 0;
+    }
+    
+}
+
+void printVector(const vector<int>& values) {
+    cout << "[";
+    for (int i = 0; i < values.size(); i++) {
+        if (i > 0) {
+            cout << ", ";
+        }
+        cout << values[i];
+    }
+    cout << "]";
+    cout << endl;
 }
 
 void testFindMissing(const vector<int>& input, const vector<int>& expected) {
     int actualSize = 0;
     int* actual = findMissing(input.data(), input.size(), actualSize);
+    if (actualSize != expected.size()) {
+        printVector(input);
+        printVector(expected);
+        cout << "size of actual " << actualSize << " != " << expected.size() << " (expected size)" << endl;
+    }
+    assert(actualSize == expected.size());
+    for (int i = 0; i < actualSize; i++) {
+        printVector(input);
+        printVector(expected);
+        if (expected[i] != actual[i]) {
+            cout << "expected[" << i << "] = " << expected[i] << " != " << actual[i] << " = actual[" << i << "]" << endl;
+        }
+        assert(expected[i] == actual[i]);
+    }
     delete[] actual;
 }
 
