@@ -1,24 +1,27 @@
 {
-  "input": "{haystack}\n{needle}\n",
-  "expected": "Please enter a sequence of positive integers, each in a separate line.\nEnd your input by typing -1.\n{haystack}\n-1\nPlease enter a number you want to search.\n{needle}\n{needle} shows in {positions}.",
+  "input": "{haystack}-1\n{needle}\n",
+  "expected": "Please enter a sequence of positive integers, each in a separate line.\nEnd your input by typing -1.\n{haystack}-1\nPlease enter the number you want to search for.\n{needle}\n{needle} {positions}\n",
   "param_names": [
     "haystack", "needle", "positions"
   ],
   "test_cases": [
     [
-      "13\n5\n8\n2\n9\n5\n8\n8", "5", "shows in lines 2, 6" 
+      "13\n5\n8\n2\n9\n5\n8\n8\n", "5", "shows in lines 2, 6" 
     ],
     [
-      "13\n5\n8\n2\n9\n5\n8\n8", "9", "shows line 5" 
+      "13\n5\n8\n2\n9\n5\n8\n8\n", "9", "shows in line 5" 
     ],
     [
-      "13\n5\n8\n2\n9\n5\n8\n8", "7", "does not show in any lines" 
+      "13\n5\n8\n2\n9\n5\n8\n8\n", "7", "does not show in any lines" 
     ],
     [
-      "12", "1", "does not show in any lines" 
+      "12\n", "1", "does not show in any lines" 
     ],
     [
-      "12", "12", "shows in line 1" 
+      "12\n", "12", "shows in line 1" 
+    ],
+    [
+      "", "6", "does not show in any lines" 
     ]
   ]
 }
