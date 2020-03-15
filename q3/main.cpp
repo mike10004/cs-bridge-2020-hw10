@@ -45,11 +45,42 @@ void searchAndPrint(const int* haystack, int haystackLength, int needle) {
     cout << endl;
 }
 
+void copyArray(int* src, int srcStart, int* dst, int dstStart, int length) {
+    for (int i = 0; i < length; i++) {
+        dst[dstStart + i] = src[srcStart + i];
+    }
+}
+
 /**
  * Implementation that uses a vector to store input numbers.
  * @return zero on success 
  */
 int main1() {
+    int capacity = 1;
+    int* numbers = new int[capacity];
+    int logicalLength = 0;
+    int query;
+    cout << "Please enter a sequence of positive integers, each in a separate line.\n"
+            "End your input by typing -1." << endl;
+    int userInput;
+    do {
+        cin >> userInput;
+        if (userInput > 0) {
+            if (logicalLength + 1 > capacity) {
+                capacity *= 2;
+                int* temp = new int[capacity];
+                copyArray(numbers, 0, temp, 0, logicalLength);
+                delete[] numbers;
+                numbers = temp;
+            }
+            numbers[logicalLength] = userInput;
+            logicalLength++;
+        }
+    } while (userInput > 0);
+    cout << "Please enter the number you want to search for." << endl;
+    cin >> query;
+    searchAndPrint(numbers, logicalLength, query);
+    delete[] numbers;
     return 0;
 }
 

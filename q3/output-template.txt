@@ -1,0 +1,12 @@
+Please enter a sequence of positive integers, each in a separate line.
+End your input by typing -1.
+{haystack}-1
+Please enter the number you want to search for.
+{needle}
+{needle} {positions}
+Please enter a sequence of positive integers, each in a separate line.
+End your input by typing -1.
+{haystack}-1
+Please enter the number you want to search for.
+{needle}
+{needle} {positions}

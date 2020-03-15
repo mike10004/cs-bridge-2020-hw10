@@ -1,6 +1,6 @@
 {
-  "input": "{haystack}-1\n{needle}\n",
-  "expected": "Please enter a sequence of positive integers, each in a separate line.\nEnd your input by typing -1.\n{haystack}-1\nPlease enter the number you want to search for.\n{needle}\n{needle} {positions}\n",
+  "input": "{haystack}-1\n{needle}\n{haystack}-1\n{needle}\n",
+  "expected_file": "output-template.txt",
   "param_names": [
     "haystack", "needle", "positions"
   ],
