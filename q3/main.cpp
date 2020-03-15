@@ -70,7 +70,7 @@ void searchAndPrint(const int* haystack, int haystackLength, int needle) {
 }
 
 /**
- * Searches for instances of a value in an array and prints the line
+ * Searches for instances of a value in a vector and prints the line
  * numbers corresponding to those values.
  * @param haystack vector of values
  * @param needle value to search for
