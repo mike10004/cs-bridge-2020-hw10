@@ -109,15 +109,12 @@ int main() {
     testCreateWordsArray("You can do it ", expectedCommon);
     testCreateWordsArray("You     can do  it", expectedCommon);
     testCreateWordsArray(" You can do it", expectedCommon);
-    vector<string> oneWord = {"One"};
-    testCreateWordsArray("One", oneWord);
+    testCreateWordsArray("One", {"One"});
     vector<string> empty = {};
     testCreateWordsArray("", empty);
-    vector<string> expected8 = {};
     testCreateWordsArray(" ", empty);
-    vector<string> twoWords = {"Two", "words"};
-    testCreateWordsArray("Two words", twoWords);
-    vector<string> punctuated = {"You", "can", "do", "it"};
-    testCreateWordsArray("You, can do it!", punctuated);
+    testCreateWordsArray("Two words", {"Two", "words"});
+    testCreateWordsArray("You, can do it!", {"You", "can", "do", "it"});
+    testCreateWordsArray("Go go Gadget chainsaw! Go go Gadget...", {"Go", "go", "Gadget", "chainsaw", "Go", "go", "Gadget"});
     return 0;
 }
