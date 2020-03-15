@@ -6,6 +6,8 @@
 
 using namespace std;
 
+typedef int* intarray;
+
 int countAppearances(const int* haystack, int haystackLength, int needle) {
     int count = 0;
     for (int i = 0; i < haystackLength; i++) {
@@ -51,6 +53,18 @@ void copyArray(int* src, int srcStart, int* dst, int dstStart, int length) {
     }
 }
 
+void append(intarray& numbers, int& logicalLength, int& capacity, int appendage) {
+    if (logicalLength + 1 > capacity) {
+        capacity *= 2;
+        int* temp = new int[capacity];
+        copyArray(numbers, 0, temp, 0, logicalLength);
+        delete[] numbers;
+        numbers = temp;
+    }
+    numbers[logicalLength] = appendage;
+    logicalLength++;
+}
+
 /**
  * Implementation that uses a vector to store input numbers.
  * @return zero on success 
@@ -66,15 +80,7 @@ int main1() {
     do {
         cin >> userInput;
         if (userInput > 0) {
-            if (logicalLength + 1 > capacity) {
-                capacity *= 2;
-                int* temp = new int[capacity];
-                copyArray(numbers, 0, temp, 0, logicalLength);
-                delete[] numbers;
-                numbers = temp;
-            }
-            numbers[logicalLength] = userInput;
-            logicalLength++;
+            append(numbers, logicalLength, capacity, userInput);
         }
     } while (userInput > 0);
     cout << "Please enter the number you want to search for." << endl;
