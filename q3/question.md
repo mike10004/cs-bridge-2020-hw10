@@ -5,7 +5,7 @@ user a sequence of positive integers ending with -1, and another positive
 integer num that the user wishes to search for.
 
 The program should then print all the line numbers in sequence entered by the 
-user, that contain num, or a message saying that num does not show at all in 
+user that contain num, or a message saying that num does not show at all in 
 the sequence.
 
 Your program should interact with the user exactly as it shows in the following example:
@@ -25,8 +25,8 @@ Your program should interact with the user exactly as it shows in the following 
     5
     5 shows in lines 2, 6.
 
-The first version of the program, is not allowed to use the vector data structure.
-The second version of the program, should use the vector data structure.
+The first version of the program is not allowed to use the vector data structure.
+The second version of the program should use the vector data structure.
 
 ## Implementation requirements (for both programs)
 
