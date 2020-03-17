@@ -11,17 +11,21 @@ using namespace std;
 /**
  * Checks whether a character is a boundary character.
  * @param ch a character
- * @return true if and only if the character is a letter in the US English alphabet
+ * @return true if and only if the character is not a digit, US English alphabet letter, hyphen, or apostrophe 
  */
 bool isBoundary(char ch) {
-    return isspace(ch) || ispunct(ch);
+    return !((ch >= 'A' && ch <= 'Z')
+            || (ch >= 'a' && ch <= 'z')
+            || (ch >= '0' && ch <= '9')
+            || (ch == '\'')
+            || (ch == '-'));
 }
 
 /**
  * Finds the boundaries of words in a sentence. Scans
  * each character in the string, checking whether it is a 
  * boundary character, and recording the positions 
- * appropriately. Time complexity is O(n) where n is string length;
+ * appropriately. Time complexity is O(n) where n is string length.
  * @param sentence sentence
  * @param startPositions vector to accumulate word start positions
  * @param lengths vector to accumulate word lengths
@@ -57,6 +61,10 @@ void findBoundaries(const string& sentence, vector<int>& startPositions, vector<
  * copies each substring defined by the word boundaries into an array.
  * The substrings are disjoint, so at most each character in the input
  * string is copied. Time complexity is O(n).
+ * 
+ * The hyphen and apostrophe characters are treated as letters, even if 
+ * they are on their own (and not parts of words), so you may get weird 
+ * results on degenerate input like "Foo ---- bar". 
  * @param sentence input sentence
  * @param outWordsArrSize output array length
  * @return string array pointer
@@ -71,7 +79,7 @@ string* createWordsArray(const string& sentence, int& outWordsArrSize) {
     for (int i = 0; i < outWordsArrSize; i++) {
         int startPosition = startPositions[i];
         int length = lengths[i];
-        words[i] = sentence.substr(startPosition, length);   
+        words[i].assign(sentence.substr(startPosition, length));   
     }
     return words;
 }
@@ -103,18 +111,22 @@ void testCreateWordsArray(const char* inputSentence, const vector<string>& expec
  * @return zero on clean operation; nonzero on assertion failure
  */
 int main() {
-    vector<string> expectedCommon = {"You", "can", "do", "it"};
-    testCreateWordsArray("You can do it", expectedCommon);
-    testCreateWordsArray(" You can do it", expectedCommon);
-    testCreateWordsArray("You can do it ", expectedCommon);
-    testCreateWordsArray("You     can do  it", expectedCommon);
-    testCreateWordsArray(" You can do it", expectedCommon);
+    vector<string> expectedYouCanDoIt = {"You", "can", "do", "it"};
+    testCreateWordsArray("You can do it", expectedYouCanDoIt);
+    testCreateWordsArray(" You can do it", expectedYouCanDoIt);
+    testCreateWordsArray("You can do it ", expectedYouCanDoIt);
+    testCreateWordsArray("You     can do  it", expectedYouCanDoIt);
+    testCreateWordsArray(" You can do it ", expectedYouCanDoIt);
+    testCreateWordsArray("You, can do it!", expectedYouCanDoIt);
+    testCreateWordsArray("", {});
+    testCreateWordsArray(" ", {});
     testCreateWordsArray("One", {"One"});
-    vector<string> empty = {};
-    testCreateWordsArray("", empty);
-    testCreateWordsArray(" ", empty);
+    testCreateWordsArray("The movie 101 Dalmations is good.", 
+            {"The", "movie", "101", "Dalmations", "is", "good"});
+    testCreateWordsArray("A good-luck charm", {"A", "good-luck", "charm"});
+    testCreateWordsArray("Mary's little lamb", {"Mary's", "little", "lamb"});
     testCreateWordsArray("Two words", {"Two", "words"});
-    testCreateWordsArray("You, can do it!", {"You", "can", "do", "it"});
-    testCreateWordsArray("Go go Gadget chainsaw! Go go Gadget...", {"Go", "go", "Gadget", "chainsaw", "Go", "go", "Gadget"});
+    testCreateWordsArray("Go go Gadget chainsaw! Go go Gadget...", 
+            {"Go", "go", "Gadget", "chainsaw", "Go", "go", "Gadget"});
     return 0;
 }

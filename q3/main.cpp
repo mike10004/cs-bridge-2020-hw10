@@ -28,7 +28,7 @@ int countAppearances(const int* haystack, int haystackLength, int needle) {
 
 /**
  * Prints the line numbers on which a certain value appears.
- * The line numbers are equal to one more than the array position.
+ * The line numbers are equal to the array position plus one.
  * @param haystack the array 
  * @param haystackLength the array length
  * @param needle value whose line numbers are to be printed
