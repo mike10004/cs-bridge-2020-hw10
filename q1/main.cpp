@@ -120,6 +120,7 @@ int main() {
     testCreateWordsArray("You, can do it!", expectedYouCanDoIt);
     testCreateWordsArray("", {});
     testCreateWordsArray(" ", {});
+    testCreateWordsArray("a", {"a"});
     testCreateWordsArray("One", {"One"});
     testCreateWordsArray("The movie 101 Dalmations is good.", 
             {"The", "movie", "101", "Dalmations", "is", "good"});
