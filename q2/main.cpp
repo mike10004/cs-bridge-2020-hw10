@@ -52,6 +52,7 @@ int* findMissing(const int arr[], int n, int& resArrSize) {
             missingIndex++;
         }
     }
+    delete[] allNumbers;
     return missing;
 }
 
